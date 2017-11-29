@@ -1,0 +1,32 @@
+<html>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="boton">
+
+    {{#if showHomeButton}}
+    <button class="home">Home</button>
+    {{/if}}
+    <input placeholder="Type search term..." type="text">
+    <button class="search">Search</button>
+</div>
+
+<h1>{{pageTitle}}</h1>
+
+{{#if notes}}
+<ul>
+    {{#notes}}
+        <li><a href='/api/notes/{{id}}'>{{title}}</a></li>
+    {{/notes}}
+</ul>
+    {{else}}
+        <div class="nonotes">No se han encontrado notas</div>
+{{/if}}
+
+<script src="/main.js"></script>
+
+</body>
+</html>

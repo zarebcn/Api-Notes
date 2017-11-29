@@ -1,0 +1,34 @@
+a {
+    font-weight: bolder;
+    text-decoration: none;
+    color: blue;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+.nonotes {
+    font-weight: bolder;
+    color: blue;
+    font-size: 25px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.texto {
+    font-size: 17px;
+    font-weight: bolder;
+    margin-left: 4px;
+    margin-bottom: 0px;
+}
+
+h3 {
+    margin-top: 10px;
+}
