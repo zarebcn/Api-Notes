@@ -17,6 +17,10 @@ public class Note {
 		this.text = text;
 		this.tags = tags;
 	}
+	
+	public Note () {
+		
+	}
 
 	public int getId() {
 		return id;
