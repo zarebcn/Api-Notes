@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -19,15 +20,18 @@ import com.zarebcn.notas.model.Note;
 @Produces(MediaType.TEXT_HTML)
 public class NotesController {
 	
-	private List<Note> notes;
+	private Map<Integer, Note> notes;
+	private int nextId;
 	
 	public NotesController() {
 		
-		notes = new ArrayList<>();
+		notes = new HashMap<>();
 		
-		notes.add(new Note(1, "Ir al médico", "Mañana tengo que ir al médico por la tarde", new ArrayList<>(Arrays.asList("#mañana", "#médico", "#tarde"))));
-		notes.add(new Note(2, "Hacer la compra", "Tengo que ir al súper a hacer la compra por la tarde", new ArrayList<>(Arrays.asList("#compra", "#súper", "#tarde"))));
-		notes.add(new Note(3, "ver el partido", "Mañana he quedado con unos amigos para ver el barça", new ArrayList<>(Arrays.asList("#mañana", "#amigos", "#barça"))));
+		notes.put(1, new Note(1, "Ir al médico", "Mañana tengo que ir al médico por la tarde", new ArrayList<>(Arrays.asList("#mañana", "#médico", "#tarde"))));
+		notes.put(2, new Note(2, "Hacer la compra", "Tengo que ir al súper a hacer la compra por la tarde", new ArrayList<>(Arrays.asList("#compra", "#súper", "#tarde"))));
+		notes.put(3, new Note(3, "ver el partido", "Mañana he quedado con unos amigos para ver el barça", new ArrayList<>(Arrays.asList("#mañana", "#amigos", "#barça"))));
+		
+		nextId = 4;
 	}
 	
 	@GET
@@ -36,7 +40,7 @@ public class NotesController {
 	        Map<String, Object> map = new HashMap<>();
 	        
 	        map.put("pageTitle", "Notes");
-            map.put("notes", notes);
+            map.put("notes", notes.values());
 
             return HandlebarsUtil.processTemplate("notes", map);
 
@@ -46,9 +50,9 @@ public class NotesController {
 	@Path("{id}")
 	public String viewNote(@PathParam("id") int noteId) {
 		
-		 if (noteId > 0 && noteId <= notes.size()) {
+		 if (noteId > 0 && noteId <= nextId - 1) {
 
-	            Note note = notes.get(noteId - 1);
+	            Note note = notes.get(noteId);
 
 	            Map<String, Object> map = new HashMap<>();
 	            map.put("title", note.getTitle());
@@ -89,27 +93,35 @@ public class NotesController {
 		 Map<String, Object> map = new HashMap<>();
 		 Map<Integer, Object> filteredNotes = new HashMap<>();
 		
-		for (int i = 0; i < notes.size(); i++) {
+		for (int i = 1; i <= nextId - 1; ) {
 			
-			if (notes.get(i).getTitle().toLowerCase().equals(searchTerm.toLowerCase()) || 
-					notes.get(i).getTitle().toLowerCase().contains(searchTerm.toLowerCase())) {
+			if (notes.get(i) != null) {
 				
-				filteredNotes.put(notes.get(i).getId(), notes.get(i));
-			}
-			
-			if (notes.get(i).getText().toLowerCase().equals(searchTerm.toLowerCase()) || 
-					notes.get(i).getText().toLowerCase().contains(searchTerm.toLowerCase()) ) {
-				
-				filteredNotes.put(notes.get(i).getId(), notes.get(i));
-			}
-			
-			for (int j = 0; j < notes.get(i).getTags().size(); j++) {
-				
-				if (notes.get(i).getTags().get(j).substring(1, notes.get(i).getTags().get(j).length())
-						.toLowerCase().equals(searchTerm.toLowerCase())) {
+				if (notes.get(i).getTitle().toLowerCase().equals(searchTerm.toLowerCase()) || 
+						notes.get(i).getTitle().toLowerCase().contains(searchTerm.toLowerCase()) ) {
 					
 					filteredNotes.put(notes.get(i).getId(), notes.get(i));
 				}
+				
+				if (notes.get(i).getText().toLowerCase().equals(searchTerm.toLowerCase()) || 
+						notes.get(i).getText().toLowerCase().contains(searchTerm.toLowerCase()) ) {
+					
+					filteredNotes.put(notes.get(i).getId(), notes.get(i));
+				}
+				
+				for (int j = 0; j < notes.get(i).getTags().size(); j++) {
+					
+					if (notes.get(i).getTags().get(j).substring(1, notes.get(i).getTags().get(j).length())
+							.toLowerCase().equals(searchTerm.toLowerCase())) {
+						
+						filteredNotes.put(notes.get(i).getId(), notes.get(i));
+					}
+				}
+				
+				i++;
+				
+			} else {
+				i++;
 			}
 		}
 		
@@ -118,6 +130,13 @@ public class NotesController {
 	      map.put("showHomeButton", true);
 
 	      return HandlebarsUtil.processTemplate("notes", map);
+	}
+	
+	@DELETE
+	@Path("{id}")
+	public void deleteNote (@PathParam("id") int id) {
+		
+		notes.remove(id);
 	}
 
 }
