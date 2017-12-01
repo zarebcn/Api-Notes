@@ -23,7 +23,7 @@ public class NotesApplication extends Application<NotesConfiguration> {
 	    @Override
 	    public void initialize(Bootstrap<NotesConfiguration> bootstrap) {
 
-	        bootstrap.addBundle(new AssetsBundle("/assets/", "/", "index.html"));
+	        bootstrap.addBundle(new AssetsBundle("/assets/", "/", "/html/index.html"));
 	    }
 
 	    @Override

@@ -1,0 +1,33 @@
+
+.textareas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.textareas .title {
+	margin-bottom: 20px;
+}
+
+.textareas .argument {
+	margin-bottom: 20px;
+}
+
+textarea {
+	box-sizing: border-box;
+	width: 500px;
+	height: 100px;
+	resize: none;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.textareas .errortext {
+	color: red;
+	display: none;
+}

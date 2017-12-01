@@ -2,11 +2,13 @@ package com.zarebcn.notas.controllers;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.zarebcn.notas.model.Note;
 import com.zarebcn.notas.service.NotesService;
 
 @Path("/notes")
@@ -46,5 +48,11 @@ public class NotesControllerNew {
 	@Path("{id}")
 	public void deleteNote (@PathParam("id") int id) {
 		notesService.deleteNote(id);
+	}
+	
+	@POST
+	public void createNote (Note note) {
+		
+		notesService.createNote(note);
 	}
 }

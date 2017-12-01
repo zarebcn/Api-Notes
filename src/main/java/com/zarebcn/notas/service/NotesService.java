@@ -106,14 +106,27 @@ public class NotesService {
 		
 		  map.put("pageTitle", "Notes found by selected search term");
 	      map.put("notes", filteredNotes.values());
-	      map.put("showHomeButton", true);
 
-	      return HandlebarsUtil.processTemplate("notes", map);
+	      return HandlebarsUtil.processTemplate("filterednotes", map);
 	}
 	
 	public void deleteNote (int id) {
 		
 		notes.remove(id);
+	}
+	
+	public void createNote (Note note) {
+		
+		Note nota = new Note();
+		
+		nota.setId(nextId);
+		nota.setTitle(note.getTitle());
+		nota.setText(note.getText());
+		nota.setTags(note.getTags());
+		
+		notes.put(nextId, nota);
+		
+		nextId++;
 	}
 
 }
