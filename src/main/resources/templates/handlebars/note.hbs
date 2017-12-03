@@ -1,25 +1,45 @@
 <html>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/note.css">
 </head>
 <body>
 
-<div class="boton">
-    <button class="home">Home</button>
-    <input placeholder="Type search term..." type="text">
-    <button class="search">Search</button>
+<div class="main">
+
+	<div class="homeinputsearch">
+    	<button class="home">Home</button>
+    	<input placeholder="Type search term..." type="text">
+    	<button class="search">Search</button>
+	</div>
+
+	<h2>{{title}}</h2>
+	<h3>{{text}}</h3>
+	<h4>{{tags}}</h4>
+	
+	<div class="editanddelete">
+		<button class="edit">Edit note</button><button class="delete">Delete note</button>
+	</div>
+	
 </div>
 
-<h2>{{title}}</h2>
-<h3>{{text}}</h3>
-<h4>{{tags}}</h4>
+<div class="textareas">
+	<h1>Edit the note</h1>
+	<textarea class="title" rows="92" cols="15" placeholder="Type the note title...">{{title}}</textarea>
+	<textarea class="argument" rows="92" cols="15" placeholder="Type the note argument...">{{text}}</textarea>
+	<textarea class="tags" rows="92" cols="15" placeholder="Type the note *tags...">{{tags}}</textarea>
+	<p>*Type the tags with a # at the beggining of the word and a blankspace between them</p>
+	<p class="errortext">Failed to edit the note, please fill correctly the 3 fields</p>
+</div>
 
-<button class="delete">Delete note</button>
+<div class="backandsave">
+	<button class="back">Back</button><button class="save">Save changes</button>
+</div>
+
+</body>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 <script src="/js/note.js"></script>
 
-</body>
 </html>

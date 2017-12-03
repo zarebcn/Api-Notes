@@ -1,9 +1,24 @@
 
+h3 {
+    margin-top: 10px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.editanddelete {
+	flex-direction: row;
+}
+
 .textareas {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
+    display: none;
 }
 
 .textareas .title {
@@ -21,13 +36,22 @@ textarea {
 	resize: none;
 }
 
-.buttons {
+.backandsave {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    display: none;
 }
 
 .textareas .errortext {
 	color: red;
 	display: none;
+}
+
+.editanddelete .edit {
+	margin-right: 10px;
+}
+
+.backandsave .back {
+	margin-right: 10px;
 }

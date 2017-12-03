@@ -16,19 +16,51 @@ li {
     font-size: 25px;
 }
 
-body {
+.main {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.texto {
-    font-size: 17px;
-    font-weight: bolder;
-    margin-left: 4px;
-    margin-bottom: 0px;
-}
-
 h3 {
     margin-top: 10px;
+}
+
+.textareas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.textareas .title {
+	margin-bottom: 20px;
+}
+
+.textareas .argument {
+	margin-bottom: 20px;
+}
+
+textarea {
+	box-sizing: border-box;
+	width: 500px;
+	height: 100px;
+	resize: none;
+}
+
+.backandadd {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    display: none;
+}
+
+.textareas .errortext {
+	color: red;
+	display: none;
+}
+
+.backandadd .back{
+	margin-right: 10px;
 }

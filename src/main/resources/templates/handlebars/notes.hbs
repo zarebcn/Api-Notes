@@ -3,27 +3,45 @@
 <head>
     <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
 
-<div class="boton">
+<div class="main">
 
-    <input placeholder="Type search term..." type="text">
-    <button class="search">Search</button>
+	<div class="inputandbutton">
+
+    	<input placeholder="Type search term..." type="text">
+    	<button class="search">Search</button>
+	</div>
+
+	<h1>{{pageTitle}}</h1>
+
+	{{#if notes}}
+	<ul>
+    	{{#notes}}
+        	<li><a href='/api/notes/{{id}}'>{{title}}</a></li>
+    	{{/notes}}
+	</ul>
+    	{{else}}
+        	<div class="nonotes">No notes found</div>
+	{{/if}}
+
+	<button class="create">Create a note</button>
+	
 </div>
 
-<h1>{{pageTitle}}</h1>
+<div class="textareas">
+	<h1>Create a note</h1>
+	<textarea class="title" rows="92" cols="15" placeholder="Type the note title..."></textarea>
+	<textarea class="argument" rows="92" cols="15" placeholder="Type the note argument..."></textarea>
+	<textarea class="tags" rows="92" cols="15" placeholder="Type the note *tags..."></textarea>
+	<p>*Type the tags with a # at the beggining of the word and a blankspace between them</p>
+	<p class="errortext">Failed to create a note, please fill correctly the 3 fields</p>
+</div>
 
-{{#if notes}}
-<ul>
-    {{#notes}}
-        <li><a href='/api/notes/{{id}}'>{{title}}</a></li>
-    {{/notes}}
-</ul>
-    {{else}}
-        <div class="nonotes">No notes found</div>
-{{/if}}
-
-<button class="create">Create a note</button>
+<div class="backandadd">
+	<button class="back">Back</button><button class="add">Add note</button>
+</div>
 
 </body>
 

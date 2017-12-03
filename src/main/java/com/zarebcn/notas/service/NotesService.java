@@ -53,7 +53,7 @@ public class NotesService {
 	            	
 	            	if (i < note.getTags().size() - 1) {
 	            		
-	            		tags += ", ";
+	            		tags += " ";
 	            	}
 	            }
 	            
@@ -127,6 +127,17 @@ public class NotesService {
 		notes.put(nextId, nota);
 		
 		nextId++;
+	}
+	
+	public void editnote (int id, Note note) {
+		
+		Note nota = new Note();
+		nota.setId(id);
+		nota.setTitle(note.getTitle());
+		nota.setText(note.getText());
+		nota.setTags(note.getTags());
+		
+		notes.put(id, nota);
 	}
 
 }

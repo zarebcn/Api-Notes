@@ -3,6 +3,7 @@ package com.zarebcn.notas.controllers;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -54,5 +55,12 @@ public class NotesControllerNew {
 	public void createNote (Note note) {
 		
 		notesService.createNote(note);
+	}
+	
+	@PUT
+	@Path("{id}")
+	public void editNote (@PathParam("id") int id, Note note) {
+		
+		notesService.editnote(id, note);
 	}
 }
