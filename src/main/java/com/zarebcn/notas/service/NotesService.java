@@ -9,6 +9,7 @@ import java.util.Map;
 
 
 import com.zarebcn.notas.model.Note;
+import com.zarebcn.notas.util.StringUtil;
 
 public class NotesService {
 	
@@ -48,14 +49,19 @@ public class NotesService {
 			
 			for (int j = 0; j < notes.get(id).getTags().size(); j++) {
 				
-				if (notes.get(id).getTags().get(j).toLowerCase().contains(termLower)) {
+				/*if (notes.get(id).getTags().get(j).toLowerCase().contains(termLower)) {
 					
 					foundTag = true;
-				} 
+				} */
+				
+				if (StringUtil.containsIgnoreCase(notes.get(id).getTags().get(j), searchTerm)) {
+					
+					foundTag = true;
+				}
 			}
 			
-			if (notes.get(id).getTitle().toLowerCase().contains(termLower) || notes.get(id).getText().toLowerCase().contains(termLower)
-				|| foundTag) {
+			if (foundTag || notes.get(id).getTitle().toLowerCase().contains(termLower) ||
+				 notes.get(id).getText().toLowerCase().contains(termLower)) {
 				
 				filteredNotes.add(notes.get(id));	
 			}
