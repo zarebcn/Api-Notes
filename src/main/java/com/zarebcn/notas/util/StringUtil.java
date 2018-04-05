@@ -2,8 +2,8 @@ package com.zarebcn.notas.util;
 
 public class StringUtil {
 	
-	public static Boolean containsIgnoreCase (String text, String searchTerm) {
+	public static Boolean containsIgnoreCase (String text, String subText) {
 		
-		return text.toLowerCase().contains(searchTerm.toLowerCase());
+		return text.toLowerCase().contains(subText.toLowerCase());
 	}
 }

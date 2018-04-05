@@ -38,8 +38,7 @@ public class NotesService {
 	}
 	
 	public Collection<Note> filterBySearchTerm (String searchTerm) {
-
-		String termLower = searchTerm.toLowerCase();		
+		
 		List<Note> filteredNotes = new ArrayList<>();
 		Boolean foundTag;
 		
@@ -49,19 +48,14 @@ public class NotesService {
 			
 			for (int j = 0; j < notes.get(id).getTags().size(); j++) {
 				
-				/*if (notes.get(id).getTags().get(j).toLowerCase().contains(termLower)) {
-					
-					foundTag = true;
-				} */
-				
 				if (StringUtil.containsIgnoreCase(notes.get(id).getTags().get(j), searchTerm)) {
 					
 					foundTag = true;
 				}
 			}
 			
-			if (foundTag || notes.get(id).getTitle().toLowerCase().contains(termLower) ||
-				 notes.get(id).getText().toLowerCase().contains(termLower)) {
+			if (foundTag || StringUtil.containsIgnoreCase(notes.get(id).getTitle(), searchTerm) ||
+				 StringUtil.containsIgnoreCase(notes.get(id).getText(), searchTerm)) {
 				
 				filteredNotes.add(notes.get(id));	
 			}
