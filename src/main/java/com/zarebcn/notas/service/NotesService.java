@@ -9,7 +9,7 @@ import java.util.Map;
 
 
 import com.zarebcn.notas.model.Note;
-import com.zarebcn.notas.util.StringUtil;
+import static com.zarebcn.notas.util.StringUtil.*;
 
 public class NotesService {
 	
@@ -40,22 +40,21 @@ public class NotesService {
 	public Collection<Note> filterBySearchTerm (String searchTerm) {
 		
 		List<Note> filteredNotes = new ArrayList<>();
-		Boolean foundTag;
 		
 		for (Integer id : notes.keySet()) {
 			
-			foundTag = false;
+			boolean foundTag = false;
 			
-			for (int j = 0; j < notes.get(id).getTags().size(); j++) {
+			for (String tag : notes.get(id).getTags()) {
 				
-				if (StringUtil.containsIgnoreCase(notes.get(id).getTags().get(j), searchTerm)) {
+				if (containsIgnoreCase(tag, searchTerm)) {
 					
 					foundTag = true;
 				}
 			}
 			
-			if (foundTag || StringUtil.containsIgnoreCase(notes.get(id).getTitle(), searchTerm) ||
-				 StringUtil.containsIgnoreCase(notes.get(id).getText(), searchTerm)) {
+			if (foundTag || containsIgnoreCase(notes.get(id).getTitle(), searchTerm) ||
+				 containsIgnoreCase(notes.get(id).getText(), searchTerm)) {
 				
 				filteredNotes.add(notes.get(id));	
 			}
