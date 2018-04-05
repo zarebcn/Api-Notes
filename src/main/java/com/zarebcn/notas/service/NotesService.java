@@ -2,12 +2,13 @@ package com.zarebcn.notas.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 import com.zarebcn.notas.model.Note;
-import com.zarebcn.notas.util.HandlebarsUtil;
 
 public class NotesService {
 	
@@ -25,89 +26,42 @@ public class NotesService {
 		nextId = 4;
 	}
 	
-	public String viewNotes() {
+	public Collection<Note> viewNotes() {
 		
-        Map<String, Object> map = new HashMap<>();
-        
-        map.put("pageTitle", "Notes");
-        map.put("notes", notes.values());
-
-        return HandlebarsUtil.processTemplate("notes", map);
+		return notes.values();
 	}
 	
-	public String viewNote(int noteId) {
+	public Note viewNote(int noteId) {
 		
-		 if (noteId > 0 && noteId <= nextId - 1) {
-
-	            Note note = notes.get(noteId);
-
-	            Map<String, Object> map = new HashMap<>();
-	            map.put("title", note.getTitle());
-	            map.put("text", note.getText());
-	            
-	            String tags = "";
-	            
-	            for (int i = 0; i < note.getTags().size(); i++) {
-	            	
-	            	tags += note.getTags().get(i);
-	            	
-	            	if (i < note.getTags().size() - 1) {
-	            		
-	            		tags += " ";
-	            	}
-	            }
-	            
-	            map.put("tags", tags);
-
-	            return HandlebarsUtil.processTemplate("note", map);
-
-	        } else {
-
-	            return "Note not found";
-	        }
+		return notes.get(noteId);
 	}
 	
-	public String filterBySearchTerm (String searchTerm) {
+	public Collection<Note> filterBySearchTerm (String searchTerm) {
+
+		String termLower = searchTerm.toLowerCase();		
+		List<Note> filteredNotes = new ArrayList<>();
+		Boolean foundTag;
 		
-		 Map<String, Object> map = new HashMap<>();
-		 Map<Integer, Object> filteredNotes = new HashMap<>();
-		
-		for (int i = 1; i <= nextId - 1; ) {
+		for (Integer id : notes.keySet()) {
 			
-			if (notes.get(i) != null) {
+			foundTag = false;
+			
+			for (int j = 0; j < notes.get(id).getTags().size(); j++) {
 				
-				if (notes.get(i).getTitle().toLowerCase().equals(searchTerm.toLowerCase()) || 
-						notes.get(i).getTitle().toLowerCase().contains(searchTerm.toLowerCase()) ) {
+				if (notes.get(id).getTags().get(j).toLowerCase().contains(termLower)) {
 					
-					filteredNotes.put(notes.get(i).getId(), notes.get(i));
-				}
+					foundTag = true;
+				} 
+			}
+			
+			if (notes.get(id).getTitle().toLowerCase().contains(termLower) || notes.get(id).getText().toLowerCase().contains(termLower)
+				|| foundTag) {
 				
-				if (notes.get(i).getText().toLowerCase().equals(searchTerm.toLowerCase()) || 
-						notes.get(i).getText().toLowerCase().contains(searchTerm.toLowerCase()) ) {
-					
-					filteredNotes.put(notes.get(i).getId(), notes.get(i));
-				}
-				
-				for (int j = 0; j < notes.get(i).getTags().size(); j++) {
-					
-					if (notes.get(i).getTags().get(j).substring(1, notes.get(i).getTags().get(j).length())
-							.toLowerCase().equals(searchTerm.toLowerCase())) {
-						
-						filteredNotes.put(notes.get(i).getId(), notes.get(i));
-					}
-				}
-				
-				i++;
-				
-			} else {
-				i++;
+				filteredNotes.add(notes.get(id));	
 			}
 		}
 		
-		  map.put("pageTitle", "Notes found by selected search term");
-	      map.put("notes", filteredNotes.values());
-
-	      return HandlebarsUtil.processTemplate("filterednotes", map);
+		return filteredNotes;
 	}
 	
 	public void deleteNote (int id) {
