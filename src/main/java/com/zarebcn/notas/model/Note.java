@@ -5,12 +5,12 @@ import java.util.List;
 
 public class Note {
 	
-	private int id;
+	private String id;
 	private String title;
 	private String text;
 	private List<String> tags = new ArrayList<>();
 	
-	public Note (int id, String title, String text, List<String> tags) {
+	public Note (String id, String title, String text, List<String> tags) {
 		
 		this.id = id;
 		this.title = title;
@@ -22,11 +22,11 @@ public class Note {
 		
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

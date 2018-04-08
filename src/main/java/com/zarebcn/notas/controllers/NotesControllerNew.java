@@ -42,7 +42,7 @@ public class NotesControllerNew {
 	
 	@GET
 	@Path("{id}")
-	public String viewNote(@PathParam("id") int noteId) {
+	public String viewNote(@PathParam("id") String noteId) {
 		
 		Note note =  notesService.viewNote(noteId);
 		
@@ -95,7 +95,7 @@ public class NotesControllerNew {
 	
 	@DELETE
 	@Path("{id}")
-	public void deleteNote (@PathParam("id") int id) {
+	public void deleteNote (@PathParam("id") String id) {
 		notesService.deleteNote(id);
 	}
 	
@@ -107,7 +107,7 @@ public class NotesControllerNew {
 	
 	@PUT
 	@Path("{id}")
-	public void editNote (@PathParam("id") int id, Note note) {
+	public void editNote (@PathParam("id") String id, Note note) {
 		
 		notesService.editnote(id, note);
 	}
