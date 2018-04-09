@@ -4,15 +4,10 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.zarebcn.notas.model.Note;
@@ -36,7 +31,7 @@ public class NotesService {
 		
 		notesCol.find().forEach((Document noteDoc) -> {
 			
-			notes.add(converterToNote(noteDoc));
+			notes.add(convertToNote(noteDoc));
 		});
 		
 		return notes;
@@ -46,27 +41,27 @@ public class NotesService {
 		
 		Document noteDoc = notesCol.find(new Document("_id", new ObjectId(noteId))).first();
 		
-		return converterToNote(noteDoc);
+		return convertToNote(noteDoc);
 	}
 	
 	public Collection<Note> filterBySearchTerm (String searchTerm) {
 		
 		List<Note> filteredNotes = new ArrayList<>();
 		
-		DBObject clause1 = new BasicDBObject("tags", searchTerm);  
-		DBObject clause2 = new BasicDBObject("title", Pattern.compile(searchTerm)); 
-		DBObject clause3 = new BasicDBObject("text", Pattern.compile(searchTerm)); 
-		BasicDBList or = new BasicDBList();
+		Document clause1 = new Document("tags", Pattern.compile(searchTerm));  
+		Document clause2 = new Document("title", Pattern.compile(searchTerm)); 
+		Document clause3 = new Document("text", Pattern.compile(searchTerm)); 
+		
+		List<Document> or = new ArrayList<>();
 		or.add(clause1);
 		or.add(clause2);
 		or.add(clause3);
-		DBObject query = new BasicDBObject("$or", or);
 		
-		FindIterable<Document> cur = notesCol.find((Bson) query);
+		Document filterQuery = new Document("$or", or);
 		
-		cur.forEach((Document noteDoc) -> {
+		notesCol.find(filterQuery).forEach((Document noteDoc) -> {
 			
-			filteredNotes.add(converterToNote(noteDoc));
+			filteredNotes.add(convertToNote(noteDoc));
 		});
 		
 		return filteredNotes;
@@ -79,16 +74,16 @@ public class NotesService {
 	
 	public void createNote (Note note) {
 		
-		BasicDBObject newDoc = new BasicDBObject("title", note.getTitle()).append("text", note.getText()).append("tags", note.getTags());
+		Document newDoc = new Document("title", note.getTitle()).append("text", note.getText()).append("tags", note.getTags());
 		
-		notesCol.insertOne(new Document(newDoc));
+		notesCol.insertOne(newDoc);
 	}
 	
 	public void editnote (String id, Note note) {
 		
-		BasicDBObject docId = new BasicDBObject("_id", new ObjectId(id));
-		BasicDBObject editedDoc = new BasicDBObject("title", note.getTitle()).append("text", note.getText()).append("tags", note.getTags());
-		BasicDBObject updateQuery = new BasicDBObject("$set", editedDoc);
+		Document docId = new Document("_id", new ObjectId(id));
+		Document editedDoc = new Document("title", note.getTitle()).append("text", note.getText()).append("tags", note.getTags());
+		Document updateQuery = new Document("$set", editedDoc);
 		
 		notesCol.updateOne(docId, updateQuery);
 	}

@@ -7,7 +7,8 @@ import com.zarebcn.notas.model.Note;
 
 public class ConverterToNote {
 	
-	public static Note converterToNote (Document noteDoc) {
+	@SuppressWarnings("unchecked")
+	public static Note convertToNote (Document noteDoc) {
 		
 		Note note = new Note();
 		note.setId( (String) noteDoc.getObjectId("_id").toString() );
